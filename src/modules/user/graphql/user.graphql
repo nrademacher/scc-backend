@@ -1,0 +1,56 @@
+scalar DateTime
+
+enum UserRoles {
+    ADMIN
+    PRODUCT_OWNER
+    PROJECT_MANAGER
+    TECHNICAL_LEAD
+    SOFTWARE_DEVELOPER
+}
+
+enum UserEvents {
+    SIGN_UP
+    LOG_IN
+}
+
+type User {
+    id: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    email: String!
+    name: String
+    verified: Boolean
+    displayName: String
+    bio: String
+    role: UserRoles!
+    chatsReceived: [Chat]
+    chatsSent: [Chat]
+}
+
+type Query {
+    hello: String
+    login(email: String!, password: String!): String
+    self: User!
+    userById(id: String!): User!
+    userByEmail(email: String!): User!
+    usersByRole(role: UserRoles!): [User!]!
+}
+
+type Mutation {
+    signUpUser(
+        email: String!
+        password: String!
+        name: String!
+        displayName: String
+        bio: String
+        role: UserRoles
+    ): User!
+    verifyUser(userEmail: String!): User!
+    changeUserRole(userEmail: String!, newRole: UserRoles!): User!
+    changeUserDisplayName(userEmail: String!, newDisplayName: String!): User!
+    changeUserBio(userEmail: String!, newBio: String!): User!
+}
+
+type Subscription {
+    subscribeToUserEvent(event: UserEvents!): User
+}

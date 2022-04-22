@@ -1,0 +1,32 @@
+enum ChatChannels {
+    ALL
+    ADV_ENG
+    CES
+    IOT
+    PRIVATE
+}
+
+model Chat {
+    id String @id @default(cuid()) @map("_id") @db.ObjectId
+
+    from   User   @relation(name: "ChatToSender", fields: [fromId], references: [id])
+    fromId String
+
+    to   User?   @relation(name: "ChatToRecipient", fields: [toId], references: [id])
+    toId String?
+
+    channel ChatChannels @default(ALL)
+
+    message String
+
+    @@map("chats")
+}
+
+model User {
+    id String @id @default(cuid()) @map("_id") @db.ObjectId
+
+    chatsSent     Chat[] @relation(name: "ChatToSender")
+    chatsReceived Chat[] @relation(name: "ChatToRecipient")
+
+    @@map("users")
+}

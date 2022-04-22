@@ -1,0 +1,12 @@
+{
+  "mixers": [
+    {
+      "input": [
+        "./prisma/datasource.prisma",
+        "./src/modules/user/prisma/user.prisma",
+        "./src/modules/chat/prisma/chat.prisma"
+      ],
+      "output": "prisma/schema.prisma"
+    }
+  ]
+}
