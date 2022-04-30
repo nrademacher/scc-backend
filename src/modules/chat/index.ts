@@ -1,1 +1,0 @@
-export { chatResolvers } from './graphql'
