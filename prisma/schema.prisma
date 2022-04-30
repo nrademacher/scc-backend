@@ -4,62 +4,51 @@ datasource db {
 }
 
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
+}
+
+model Contract {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  publicId String
+
+  machineName String
+  oneTimeFee  Float
+  usageFee    Float
+
+  user   User?   @relation(name: "ContractsToUser", fields: [userId], references: [id])
+  userId String? @db.ObjectId
+
+  @@map("contracts")
+}
+
+enum ContractEvents {
+  CREATION
+  UPDATE
+  DELETION
 }
 
 model User {
-    id String @id @default(auto()) @map("_id") @db.ObjectId
+  id String @id @default(auto()) @map("_id") @db.ObjectId
 
-    name String @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  publicId String
 
-    email        String  @unique
-    passwordHash String
-    verified     Boolean
+  name         String @unique
+  email        String @unique
+  passwordHash String
 
-    role UserRoles @default(SOFTWARE_DEVELOPER)
+  contracts Contract[] @relation(name: "ContractsToUser")
 
-    chatsSent     Chat[] @relation(name: "ChatToSender")
-    chatsReceived Chat[] @relation(name: "ChatToRecipient")
-
-    displayName String?
-    bio         String?
-
-    @@map("users")
+  @@map("users")
 }
 
 enum UserEvents {
     SIGN_UP
     LOG_IN
-}
-
-enum UserRoles {
-    ADMIN
-    PRODUCT_OWNER
-    PROJECT_MANAGER
-    TECHNICAL_LEAD
-    SOFTWARE_DEVELOPER
-}
-
-enum ChatChannels {
-    ALL
-    PRIVATE
-}
-
-model Chat {
-    id String @id @default(auto()) @map("_id") @db.ObjectId
-
-    from   User   @relation(name: "ChatToSender", fields: [fromId], references: [id])
-    fromId String
-
-    to   User?   @relation(name: "ChatToRecipient", fields: [toId], references: [id])
-    toId String?
-
-    channel ChatChannels @default(ALL)
-
-    message String
-
-    @@map("chats")
 }
