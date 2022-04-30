@@ -1,0 +1,30 @@
+type Contract {
+    publicId: String!
+    machineName: String!
+    oneTimeFee: Float!
+    usageFee: Float!
+    user: User
+}
+
+type Query {
+    contractById(id: String!): Contract
+    allContracts: [Contract]!
+    contractsByMachine(machineName: String!): [Contract]!
+    contractsByUser(userId: String!): [Contract]!
+}
+
+type Mutation {
+    createContract(machineName: String!, oneTimeFee: Float!, usageFee: Float!): Contract
+    updateContract(id: String!, machineName: String, oneTimeFee: Float, usageFee: Float): Contract
+    deleteContract(id: String!): Contract
+}
+
+enum ContractEvents {
+    CREATION
+    UPDATE
+    DELETION
+}
+
+type Subscription {
+    subscribeToContracts(event: ContractEvents!): Contract
+}

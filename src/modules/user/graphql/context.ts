@@ -1,4 +1,3 @@
-import type { UserRoles } from '@prisma/client'
 import type { Request } from 'express'
 import isJWT from 'validator/lib/isJWT'
 import { verify } from 'jsonwebtoken'
@@ -8,7 +7,6 @@ import { config } from '#internal/lib'
 export interface UserResolverContext {
     isAuthed: boolean
     userId?: string
-    userRole?: UserRoles
 }
 
 export async function createUserContext(request: Request) {
@@ -33,7 +31,6 @@ export async function createUserContext(request: Request) {
             if (decoded.userId) {
                 userResolverContext.isAuthed = true
                 userResolverContext.userId = decoded.userId
-                userResolverContext.userRole = decoded.userRole
             }
         } catch (error) {
             const message = error instanceof Error ? error.message : 'token_validation_failure'

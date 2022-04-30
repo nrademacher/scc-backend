@@ -1,14 +1,10 @@
+import type { User } from '@prisma/client'
 import { prisma } from '#internal/services'
-import type { UserRoles } from '@prisma/client'
 
-export async function getUserById(userId: string) {
-    return await prisma.user.findUnique({ where: { id: userId } })
+export async function getUserById(userId: string): Promise<User | null> {
+    return await prisma.user.findUnique({ where: { publicId: userId } })
 }
 
-export async function getUserByEmail(userEmail: string) {
+export async function getUserByEmail(userEmail: string): Promise<User | null> {
     return await prisma.user.findUnique({ where: { email: userEmail } })
-}
-
-export async function getUsersByRole(userRole: UserRoles) {
-    return await prisma.user.findMany({ where: { role: userRole } })
 }

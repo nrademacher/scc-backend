@@ -1,5 +1,5 @@
 import type { QueryResolvers, ResolverContext } from '#internal/types'
-import { getUserByEmail, getUserById, getUsersByRole, loginUser } from '../../prisma'
+import { getUserByEmail, getUserById, loginUser } from '../../prisma'
 import { coerceToAuthError } from '#internal/utils'
 import { AuthenticationError } from 'apollo-server-express'
 
@@ -30,10 +30,5 @@ export const userQueries: QueryResolvers<ResolverContext> = {
         if (!userId) throw new AuthenticationError('missing_token')
 
         return await getUserByEmail(email)
-    },
-    usersByRole: async (_parent, { role }, { userId }) => {
-        if (!userId) throw new AuthenticationError('missing_token')
-
-        return await getUsersByRole(role)
     },
 }

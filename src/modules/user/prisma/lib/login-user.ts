@@ -17,5 +17,5 @@ export async function loginUser(userNameOrEmail: string, password: string) {
     const match = await compare(password, user.passwordHash)
     if (!match) throw new Error('invalid_credentials')
 
-    return sign({ userId: user.id, userRole: user.role }, config.TOKEN_SECRET)
+    return sign({ userId: user.id }, config.TOKEN_SECRET)
 }

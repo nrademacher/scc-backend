@@ -1,4 +1,4 @@
-import { Resolvers } from '#internal/types'
+import type { Resolvers } from '#internal/types'
 import merge from 'lodash.merge'
 
 export function mergeResolvers(...resolversArray: Resolvers[]): Resolvers {
@@ -6,11 +6,11 @@ export function mergeResolvers(...resolversArray: Resolvers[]): Resolvers {
         return resolversArray[0]
     }
 
-    let merged: Resolvers = {}
+    let mergedResolvers: Resolvers = {}
 
     for (const resolvers of resolversArray) {
-        merged = merge(merged, resolvers)
+        mergedResolvers = merge(mergedResolvers, resolvers)
     }
 
-    return merged
+    return mergedResolvers
 }

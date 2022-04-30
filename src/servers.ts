@@ -4,7 +4,8 @@ import { SubscriptionServer } from 'subscriptions-transport-ws'
 import { execute, subscribe } from 'graphql'
 import { ApolloServer } from 'apollo-server-express'
 import { schema, config, formatError } from './lib'
-import { moduleContexts } from './modules'
+import { context } from './modules'
+//
 ;(async () => {
     const app = express()
 
@@ -17,7 +18,7 @@ import { moduleContexts } from './modules'
 
     const apolloServer = new ApolloServer({
         schema,
-        context: moduleContexts,
+        context,
         formatError,
         plugins: [
             {
