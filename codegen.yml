@@ -4,7 +4,7 @@ generates:
     config:
       mappers:
         User: ./node_modules/.prisma/client/index.d.ts#User
-        Chat: ./node_modules/.prisma/client/index.d.ts#Chat
+        Contract: ./node_modules/.prisma/client/index.d.ts#Contract
       namingConvention:
         enumValues: change-case#constantCase
       enumsAsTypes: true
