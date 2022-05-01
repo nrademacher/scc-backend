@@ -4,7 +4,7 @@ ARG node_image=node:${node_version}-alpine
 # STAGE 1
 FROM $node_image as builder
 
-ENV DB_HOST=postgres
+ENV DB_HOST=mongo
 
 WORKDIR /builder/
 
@@ -14,7 +14,6 @@ RUN yarn install --frozen-lockfile --no-progress
 
 COPY . ./
 
-RUN yarn prisma:merge
 RUN yarn prisma:generate
 
 RUN yarn build
@@ -32,7 +31,7 @@ RUN yarn install --frozen-lockfile --production=true --no-progress
 # STAGE 3
 FROM $node_image
 
-ENV DB_HOST=postgres
+ENV DB_HOST=mongo
 ENV DB_ENV=prod
 
 WORKDIR /server/
