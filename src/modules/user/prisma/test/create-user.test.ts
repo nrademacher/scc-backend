@@ -9,29 +9,29 @@ describe('user creation', () => {
     it('creates a new valid user in the database', async () => {
         await createUser({
             name: 'john doe',
-            email: 'john@itemis.com',
+            email: 'john@doe.com',
             password: '123313Al;XXX',
         })
 
         const result = await prisma.user.findUnique({
-            where: { email: 'john@itemis.com' },
+            where: { email: 'john@doe.com' },
         })
 
-        expect(result).toHaveProperty('email', 'john@itemis.com')
-        expect(result).toHaveProperty('role', 'SOFTWARE_DEVELOPER')
+        expect(result).toHaveProperty('email', 'john@doe.com')
+        expect(result).toHaveProperty('name', 'john doe')
     })
 
     it('rejects creating the user if user with same email exists', async () => {
         await createUser({
             name: 'john doe',
-            email: 'john@itemis.com',
+            email: 'john@doe.com',
             password: '123313Al;XXX',
         })
 
         await expect(
             async () =>
                 await createUser({
-                    email: 'john@itemis.com',
+                    email: 'john@doe.com',
                     name: 'John',
                     password: '123313Al;XXX',
                 })
@@ -43,7 +43,7 @@ describe('user creation', () => {
             async () =>
                 await createUser({
                     name: 'J',
-                    email: 'john@itemis.com',
+                    email: 'john@doe.com',
                     password: '123313Al;XXX',
                 })
         ).rejects.toThrowError('username_too_short')
@@ -54,7 +54,7 @@ describe('user creation', () => {
             async () =>
                 await createUser({
                     name: 'J'.repeat(65),
-                    email: 'john@itemis.com',
+                    email: 'john@doe.com',
                     password: '123313Al;XXX',
                 })
         ).rejects.toThrowError('username_too_long')
@@ -65,7 +65,7 @@ describe('user creation', () => {
             async () =>
                 await createUser({
                     name: 'john doe',
-                    email: '@itemis.com',
+                    email: '@doe.com',
                     password: '123313Al;XXX',
                 })
         ).rejects.toThrowError('invalid_email_address')
@@ -74,7 +74,7 @@ describe('user creation', () => {
             async () =>
                 await createUser({
                     name: 'john doe',
-                    email: 'john@itemis',
+                    email: 'john@doe',
                     password: '123313Al;XXX',
                 })
         ).rejects.toThrowError('invalid_email_address')
@@ -85,7 +85,7 @@ describe('user creation', () => {
             async () =>
                 await createUser({
                     name: 'john doe',
-                    email: 'john@itemis.com',
+                    email: 'john@doe.com',
                     password: 'password',
                 })
         ).rejects.toThrowError('insufficient_password_strength')
@@ -94,7 +94,7 @@ describe('user creation', () => {
             async () =>
                 await createUser({
                     name: 'john doe',
-                    email: 'john@itemis.com',
+                    email: 'john@doe.com',
                     password: '12345678',
                 })
         ).rejects.toThrowError('insufficient_password_strength')

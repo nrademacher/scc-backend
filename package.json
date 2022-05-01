@@ -16,14 +16,13 @@
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|prisma|graphql)\" --write",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "test": "DB_ENV=test jest -i --detectOpenHandles --coverage",
-    "pretest": "DB_ENV=test prisma migrate reset -f",
     "util:copy-graphql-files-to-dist": "cpy '**/*.graphql' '../dist' --cwd=src --parents",
     "util:replace-dist-import-aliases": "file-ops fnr '#internal' '#internal_compiled' --silent 'dist/**/*.js'",
     "util:strip-dist-node-prefixes": "file-ops fnr 'node:' '' --silent 'dist/**/*.js'",
     "build": "yarn codegen && tsc",
     "postbuild": "run-s util:*",
     "start": "node dist/servers",
-    "deploy": "prisma migrate deploy && yarn start",
+    "deploy": "prisma db push && yarn start",
     "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\""
   },
   "lint-staged": {

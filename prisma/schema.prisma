@@ -13,7 +13,7 @@ model Contract {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  publicId String
+  publicId String @unique
 
   machineName String
   oneTimeFee  Float
@@ -37,7 +37,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  publicId String
+  publicId String @unique
 
   name         String @unique
   email        String @unique

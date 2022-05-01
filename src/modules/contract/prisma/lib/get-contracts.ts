@@ -28,8 +28,5 @@ export async function getContractsByUser(userId: string) {
                 id: userId,
             },
         },
-        include: {
-            user: true,
-        },
     })
 }
