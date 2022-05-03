@@ -22,7 +22,7 @@
     "build": "yarn codegen && tsc",
     "postbuild": "run-s util:*",
     "start": "node dist/servers",
-    "deploy": "prisma db push && yarn start",
+    "deploy": "prisma db push && concurrently \"yarn prisma studio\" \"yarn start\"",
     "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\""
   },
   "lint-staged": {
@@ -45,7 +45,6 @@
     "@types/validator": "^13.7.1",
     "@typescript-eslint/eslint-plugin": "^5.12.1",
     "@typescript-eslint/parser": "^5.12.1",
-    "concurrently": "^7.0.0",
     "cpy-cli": "^3.1.1",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.4.0",
@@ -68,6 +67,7 @@
     "@prisma/client": "^3.10.0",
     "apollo-server-express": "^3.6.3",
     "bcrypt": "^5.0.1",
+    "concurrently": "^7.0.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "graphql": "^16.3.0",
