@@ -1,9 +1,7 @@
-# TS GraphQL Prisma Starter
+# SCC backend
 
-An Express server starter, featuring:
+A GraphQL server powered by Express, Apollo Server, TypeScript, and using Prisma as an ORM/ODM for MongoDB.
 
-1. TypeScript
-1. GraphQL server with Subscription support
-1. Prisma ORM
-1. Docker files for local development setup and containerization of app
-1. Modularized structure with GraphQL and Prisma schema merging
+It's set up to split functionality into loosely coupled `modules`, so that the API is easy to extend and maintain.
+
+Note: This is based on a [previous learning project of mine](https://github.com/nrademacher/pulse-api)

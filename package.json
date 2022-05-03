@@ -4,9 +4,6 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "db-up": "docker-compose up -d",
-    "db-down": "docker-compose down",
-    "db-nuke": "docker-compose down --volumes --remove-orphans",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma db push",
     "dev:prisma": "run-s prisma:*",
