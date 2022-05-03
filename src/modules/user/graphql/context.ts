@@ -7,6 +7,7 @@ import { config } from '#internal/lib'
 export interface UserResolverContext {
     isAuthed: boolean
     userId?: string
+    userObjectId?: string | null
 }
 
 export async function createUserContext(request: Request) {
@@ -31,6 +32,7 @@ export async function createUserContext(request: Request) {
             if (decoded.userId) {
                 userResolverContext.isAuthed = true
                 userResolverContext.userId = decoded.userId
+                userResolverContext.userObjectId = decoded.userObjectId
             }
         } catch (error) {
             const message = error instanceof Error ? error.message : 'token_validation_failure'

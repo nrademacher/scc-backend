@@ -4,14 +4,14 @@ import { AuthenticationError } from 'apollo-server-express'
 import { pubsub } from '#internal/services'
 
 export const contractMutations: MutationResolvers<ResolverContext> = {
-    createContract: async (_parent, { machineName, usageFee, oneTimeFee }, { userId }) => {
-        if (!userId) throw new AuthenticationError('missing_token')
+    createContract: async (_parent, { machineName, usageFee, oneTimeFee }, { userObjectId }) => {
+        if (!userObjectId) throw new AuthenticationError('missing_token')
 
         const newContract = await createContract({
             machineName,
             usageFee,
             oneTimeFee,
-            userId,
+            userId: userObjectId,
         })
 
         pubsub.publish('CREATION', newContract)
