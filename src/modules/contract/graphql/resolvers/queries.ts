@@ -18,9 +18,14 @@ export const contractQueries: QueryResolvers<ResolverContext> = {
 
         return await getContractsByMachine(machineName)
     },
-    contractsByUser: async (_parent, _arguments, { userId }) => {
+    contractsByUser: async (_parent, { id }, { userId }) => {
         if (!userId) throw new AuthenticationError('missing_token')
 
-        return await getContractsByUser(userId)
+        return await getContractsByUser(id)
+    },
+    contractsByCurrentUser: async (_parent, _arguments, { userObjectId }) => {
+        if (!userObjectId) throw new AuthenticationError('missing_token')
+
+        return await getContractsByUser(userObjectId)
     },
 }

@@ -10,7 +10,8 @@ type Query {
     contractById(id: String!): Contract
     allContracts: [Contract]!
     contractsByMachine(machineName: String!): [Contract]!
-    contractsByUser(userId: String!): [Contract]!
+    contractsByUser(id: String!): [Contract]!
+    contractsByCurrentUser: [Contract]!
 }
 
 type Mutation {
